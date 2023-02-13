@@ -29,8 +29,15 @@ class EventTest extends TestCase
      */
     public function testCanPostEvents()
     {
-        $response = $this->post('events');
-        $response->assertStatus(200);
+        $user = User::first();
+        $user_id = $user->id;
+        $event = [
+            'user_id' => $user_id,
+            'start_at' => '2023-02-01 09:00:00',
+            'end_at' => '2023-02-01 10:00:00',
+        ];
+        $response = $this->post('events', $event);
+        $this->assertDatabaseHas('events', $event);
     }
 
     /**
