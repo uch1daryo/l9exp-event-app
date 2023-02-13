@@ -86,7 +86,9 @@ class EventTest extends TestCase
      */
     public function testCanDeleteSpecifiedEvent()
     {
-        $response = $this->delete('events/1');
-        $response->assertStatus(200);
+        $event = Event::first();
+        $endpoint = 'events/' . $event->id;
+        $response = $this->delete($endpoint);
+        $this->assertSoftDeleted($event);
     }
 }
