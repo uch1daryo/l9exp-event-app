@@ -2,10 +2,20 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class EventTest extends TestCase
 {
+    use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('db:seed', ['--class' => 'TestDatabaseSeeder']);
+    }
+
     /**
      * @return void
      */
