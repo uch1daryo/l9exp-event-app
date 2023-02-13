@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -73,8 +74,11 @@ class EventTest extends TestCase
      */
     public function testCanPutSpecifiedEvent()
     {
-        $response = $this->put('events/1');
-        $response->assertStatus(200);
+        $event = Event::first()->toArray();
+        $endpoint = 'events/' . $event['id'];
+        $event['end_at'] = '2024-01-01 00:00:00';
+        $response = $this->put($endpoint, $event);
+        $this->assertDatabaseHas('events', $event);
     }
 
     /**
