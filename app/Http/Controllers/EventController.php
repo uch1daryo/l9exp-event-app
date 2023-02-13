@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -26,6 +27,11 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $event = new Event;
+        $event->user_id = $request->input('user_id');
+        $event->start_at = $request->input('start_at');
+        $event->end_at = $request->input('end_at');
+        $event->save();
     }
 
     /**
