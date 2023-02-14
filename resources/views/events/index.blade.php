@@ -15,6 +15,13 @@
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
         },
+        events: "/api/events",
+        eventTimeFormat: {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        },
+        displayEventEnd: true,
         locale: "en"
       });
       calendar.render();
