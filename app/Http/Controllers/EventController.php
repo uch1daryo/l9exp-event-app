@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EventRegistered;
 use App\Models\Event;
 use App\Models\User;
-use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -42,6 +43,8 @@ class EventController extends Controller
         $event->start_at = $request->input('start_at');
         $event->end_at = $request->input('end_at');
         $event->save();
+
+        Mail::to($event->user->email)->send(new EventRegistered($event));
 
         return redirect('events')->with(
             'status',
