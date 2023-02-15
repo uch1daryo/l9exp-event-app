@@ -13,6 +13,12 @@ class Event extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'user_id',
+        'start_at',
+        'end_at',
+    ];
+
     /**
      * @param DateTimeInterface $date
      * @return string

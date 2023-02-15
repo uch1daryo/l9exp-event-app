@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -16,10 +18,17 @@ class EventController extends Controller
     }
 
     /**
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $users = User::select('id', 'name')->get()->toArray();
+        $period = [
+            'start' => str_replace('T', ' ', $request->start),
+            'end' => str_replace('T', ' ', $request->end),
+        ];
+        return view('events.create', compact('users', 'period'));
     }
 
     /**
@@ -33,6 +42,11 @@ class EventController extends Controller
         $event->start_at = $request->input('start_at');
         $event->end_at = $request->input('end_at');
         $event->save();
+
+        return redirect('events')->with(
+            'status',
+            '登録が完了しました'
+        );
     }
 
     /**
