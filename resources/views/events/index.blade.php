@@ -15,20 +15,23 @@
       let calendarEl = document.getElementById("calendar");
       let calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: "bootstrap5",
-        initialView: "dayGridMonth",
+        initialView: "timeGridWeek",
         headerToolbar: {
-          left: "prev,next today",
+          left: "prev",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+          right: "next"
         },
         events: "/api/events",
-        eventTimeFormat: {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false
+        selectable: true,
+        select: function(info) {
+          document.location.href = "/events/create?start=" + info.startStr + "&end=" + info.endStr;
         },
-        displayEventEnd: true,
-        locale: "en"
+        allDaySlot: false,
+        slotMinTime: "06:00:00",
+        slotMaxTime: "21:00:00",
+        contentHeight: "auto",
+        timeZone: "Asia/Tokyo",
+        locale: "ja"
       });
       calendar.render();
     });
