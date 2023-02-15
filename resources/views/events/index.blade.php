@@ -3,6 +3,12 @@
 @section('title', '予約の一覧')
 
 @section('content')
+  @if (session('status'))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      {{ session('status') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
   <div id="calendar"></div>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
