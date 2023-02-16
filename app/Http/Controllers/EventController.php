@@ -92,5 +92,21 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         $event->delete();
+
+        return redirect('events')->with(
+            'status',
+            'キャンセルが完了しました'
+        );
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $cancel_code
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request, string $cancel_code)
+    {
+        $event = Event::firstWhere('cancel_code', $cancel_code);
+        return view('events.cancel', compact('event'));
     }
 }
