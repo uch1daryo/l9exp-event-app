@@ -4,3 +4,5 @@
 
 利用開始時間 {{ $event->start_at }}
 利用終了時間 {{ $event->end_at }}
+
+予約のキャンセルは {{ config('app.url') }}/cancel/{{ $event->cancel_code }} から。
