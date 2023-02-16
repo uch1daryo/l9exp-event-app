@@ -16,7 +16,7 @@
       <span class="navbar-brand">{{ config('app.name') }}</span>
     </div>
   </nav>
-  <main class="container mt-5">
+  <main class="container mt-4">
     @yield('content')
   </main>
 </body>
