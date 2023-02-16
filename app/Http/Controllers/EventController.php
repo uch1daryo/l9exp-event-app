@@ -42,6 +42,8 @@ class EventController extends Controller
         $event->user_id = $request->input('user_id');
         $event->start_at = $request->input('start_at');
         $event->end_at = $request->input('end_at');
+        $str = $request->input('user_id') . $request->input('start_at') . $request->input('end_at');
+        $event->cancel_code = hash('sha256', $str);
         $event->save();
 
         Mail::to($event->user->email)->send(new EventRegistered($event));
