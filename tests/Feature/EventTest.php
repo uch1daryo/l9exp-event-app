@@ -91,4 +91,13 @@ class EventTest extends TestCase
         $response = $this->delete($endpoint);
         $this->assertSoftDeleted($event);
     }
+
+    /**
+     * @return void
+     */
+    public function testCanGetEventsCancel()
+    {
+        $response = $this->get('events/cancel/123456');
+        $response->assertStatus(200);
+    }
 }

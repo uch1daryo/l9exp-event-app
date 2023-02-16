@@ -26,4 +26,5 @@ Route::controller(EventController::class)->group(function () {
     Route::get('events/{event_id}/edit', 'edit');
     Route::put('events/{event_id}', 'update');
     Route::delete('events/{event_id}', 'destroy');
+    Route::get('events/cancel/{cancel_code}', 'cancel');
 });
