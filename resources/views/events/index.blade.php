@@ -17,7 +17,7 @@
         themeSystem: "bootstrap5",
         initialView: "timeGridWeek",
         headerToolbar: {
-          left: "prev",
+          left: "today",
           center: "title",
           right: "next"
         },
