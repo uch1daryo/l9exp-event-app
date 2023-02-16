@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EventRegistered;
 use App\Models\Event;
 use App\Models\User;
-use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -41,7 +42,11 @@ class EventController extends Controller
         $event->user_id = $request->input('user_id');
         $event->start_at = $request->input('start_at');
         $event->end_at = $request->input('end_at');
+        $str = $request->input('user_id') . $request->input('start_at') . $request->input('end_at');
+        $event->cancel_code = hash('sha256', $str);
         $event->save();
+
+        Mail::to($event->user->email)->send(new EventRegistered($event));
 
         return redirect('events')->with(
             'status',
@@ -87,5 +92,21 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         $event->delete();
+
+        return redirect('events')->with(
+            'status',
+            'キャンセルが完了しました'
+        );
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $cancel_code
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request, string $cancel_code)
+    {
+        $event = Event::firstWhere('cancel_code', $cancel_code);
+        return view('events.cancel', compact('event'));
     }
 }
